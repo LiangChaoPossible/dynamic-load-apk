@@ -1,0 +1,72 @@
+package com.component.hotel.invoker.api;
+
+import java.io.File;
+
+import android.content.Context;
+import android.os.Environment;
+
+/**
+ * 验证酒店插件是否合法。
+ * @author liangchao04
+ *
+ */
+public class HotelPluginVerifyUtil {
+	private static class Holder{
+		public static HotelPluginVerifyUtil instance = new  HotelPluginVerifyUtil();
+	}
+	
+	public static HotelPluginVerifyUtil getInstance(){
+		return Holder.instance;
+	}
+	
+	/**
+	 * 判断hotel apk是否合法。
+	 * @param context
+	 * @return
+	 */
+	public int isVerified(Context context){
+		if(!isExist(context)){
+			return Constant.ERROR_CODE_SDK_NOT_EXIST;
+		}
+		
+		return Constant.APK_VERIFY_SUCCESS;
+	}
+	
+	
+	/**
+	 * 判断约定路径是否存在hotel的插件。
+	 * 约定的路径为 /data/data/调起方包名/hotelsdk/hotel.apk
+	 * TODO:文件名 hotel.apk 需要修改为 hotel_1.1.apk 的 hotel_版本号.apk
+	 * @param context
+	 * @return
+	 */
+	public boolean isExist(Context context){
+		if(context==null){
+			return false;
+		}
+		
+        String destFilePath = getDestHotelApkPath(context);
+        File destFile = new File(destFilePath);
+        
+        return destFile!=null && destFile.exists();
+	}
+	
+	/**
+	 * 获得hotel apk的存放地址。这个地址是和调起方约定好的。
+	 * TODO:添加版本控制，返回版本号最高的apk
+	 * @param context
+	 * @return
+	 */
+	public String getDestHotelApkPath(Context context){
+		
+		if(context==null){
+			return "";
+		}
+		
+		if(Constant.isDebug){
+			return Environment.getExternalStorageDirectory()+"/hotelsdk/"+"hotel.apk";
+		} else {
+			return context.getFilesDir().getAbsolutePath()+"/hotelsdk/"+"hotel.apk";
+		}
+	}
+}

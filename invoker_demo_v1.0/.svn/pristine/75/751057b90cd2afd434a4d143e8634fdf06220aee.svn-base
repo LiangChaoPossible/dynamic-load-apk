@@ -1,0 +1,22 @@
+package com.component.hotel.invoker.api;
+
+public class Constant {
+	
+	/**
+	 * 是否为debug状态
+	 */
+	public static boolean isDebug = true;
+	
+	/** 调起的输入参数错误 */
+	public static final int ERROR_CODE_INPUT_ERROR = 2000;
+	
+	/**SDK 不存在*/
+	public static final int ERROR_CODE_SDK_NOT_EXIST = 2001;
+	
+	/**SDK 初始化失败 */
+	public static final int ERROR_CODE_INIT_ERROR = 2003;
+
+	
+	public static final int APK_VERIFY_SUCCESS = 3000;
+	
+}
